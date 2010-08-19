@@ -3,6 +3,17 @@
 <head>
 <script type="text/javascript" src="cake.js"></script>
 <script type="text/javascript" src="magic2d.js"></script>
+<script language="javascript">
+window.onload = function() {
+    
+    var cena = new Canvas( document.body, 600, 400, {fill: 'cyan'} ); 
+	var bola = new CircleSprite( 30, {id: 'bola', x: 0,  y: 0, fill: 'red'} );
+	
+	bola.doo( new MoveBy( x=50, y=100, duration=2 ) );
+    cena.append( bola );
+    
+};
+</script>
 </head>
 <body>
 </body>
