@@ -7,8 +7,7 @@
 window.onload = function() {
     
     var cena = new Canvas( document.body, 600, 400, {fill: 'cyan'} ); 
-	var bola = new CircleSprite( 30, {id: 'bola', x: 0,  y: 0, fill: 'red'} );
-	
+	var bola = new CircleSprite( 30, {id: 'bola', x: 80,  y: 80, fill: 'red'} );
 	bola.doo( new MoveBy( x=50, y=100, duration=2 ) );
     cena.append( bola );
     
