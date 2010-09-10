@@ -1,11 +1,18 @@
-var MoveBy = function(x, y, duration) {
+var MoveBy = function(canvas, x, y, duration) {
+    //FIXME o canvas está sendo passado apenas pra pegar o frameDuration.
+    //eh em cima dele que é feita toda a matemática da duração e do offset
+    //Definir se o frameDuration vai ser constante (=30) ou se é melhor
+    //ficar passando o canvas pra todas as actions.
+
     this.x = x;
     this.y = y;
     this.target = null;
-    this.duration = duration;
+    this.duration = duration * 1000; //duration in ms
     this._elapsed = 0.0;
     this._done = false;
     this.scheduled_to_remove = false;
+    this.canvas = canvas;
+
 };
 
 MoveBy.prototype.setTarget = function(target) {
@@ -13,38 +20,34 @@ MoveBy.prototype.setTarget = function(target) {
 };
 
 MoveBy.prototype.start = function() {
-    this.startX = this.target.x;
-    this.startY = this.target.y;
-    
-    this.endX = this.startX + this.x;
-    this.endY = this.startY + this.y;
+    console.log(this.endX);
+    console.log(this.endY);
 
-    action = this;  
-    
+    this.x_offset = this.x / (this.duration / this.canvas.frameDuration)
+    this.y_offset = this.y / (this.duration / this.canvas.frameDuration)
+
+    action = this; 
+
     this.target.addFrameListener(function(t, dt) {
-        action.step(dt)
+        if (t <= action.duration) {
+            action.step(action.x_offset, action.y_offset)
+        }
     });
-  
 };
 
-MoveBy.prototype.update = function(time) {
-    this.target.x = this.target.x + 2;//this.x * time;
-    this.target.y = this.target.y + 2;//this.y * time;
-};
-
-MoveBy.prototype.done = function() {
+MoveBy.prototype.done = function() { // useless?
     return this._elapsed >= this.duration;
 };
 
-MoveBy.prototype.step = function(dt) {
-    this._elapsed += dt;
-    
-    this.update( this._elapsed/this.duration );
+MoveBy.prototype.step = function(x_offset, y_offset) {
+    this.target.x = this.target.x + x_offset;
+    this.target.y = this.target.y + y_offset;
 };
 
 MoveBy.prototype.stop = function() {
     this.target = null;
 };
+
 
 CircleSprite = Klass(Circle, {
 
