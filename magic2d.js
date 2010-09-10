@@ -18,6 +18,13 @@ MoveBy.prototype.start = function() {
     
     this.endX = this.startX + this.x;
     this.endY = this.startY + this.y;
+
+    action = this;  
+    
+    this.target.addFrameListener(function(t, dt) {
+        action.step(dt)
+    });
+  
 };
 
 MoveBy.prototype.update = function(time) {
@@ -52,12 +59,6 @@ CircleSprite = Klass(Circle, {
         action.start();
         
         this.actions.push( action );
-        
-        
-        this.addFrameListener(function(t, dt) {
-            action.step(dt)
-        });
-        
         
     }  
 });
