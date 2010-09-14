@@ -1,4 +1,4 @@
-MoveBy = Klass({
+MoveByAction = Klass({
 
     initialize: function(canvas, x, y, duration) {
         //FIXME o canvas está sendo passado apenas pra pegar o frameDuration.
