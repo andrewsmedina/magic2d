@@ -1,52 +1,52 @@
-var MoveBy = function(canvas, x, y, duration) {
-    //FIXME o canvas está sendo passado apenas pra pegar o frameDuration.
-    //eh em cima dele que é feita toda a matemática da duração e do offset
-    //Definir se o frameDuration vai ser constante (=30) ou se é melhor
-    //ficar passando o canvas pra todas as actions.
+MoveBy = Klass({
 
-    this.x = x;
-    this.y = y;
-    this.target = null;
-    this.duration = duration * 1000; //duration in ms
-    this._elapsed = 0.0;
-    this._done = false;
-    this.scheduled_to_remove = false;
-    this.canvas = canvas;
+    initialize: function(canvas, x, y, duration) {
+        //FIXME o canvas está sendo passado apenas pra pegar o frameDuration.
+        //eh em cima dele que é feita toda a matemática da duração e do offset
+        //Definir se o frameDuration vai ser constante (=30) ou se é melhor
+        //ficar passando o canvas pra todas as actions.
 
-};
+        this.x = x;
+        this.y = y;
+        this.target = null;
+        this.duration = duration * 1000; //duration in ms
+        this._elapsed = 0.0;
+        this._done = false;
+        this.scheduled_to_remove = false;
+        this.canvas = canvas;
 
-MoveBy.prototype.setTarget = function(target) {
-    this.target = target;
-};
+    },
 
-MoveBy.prototype.start = function() {
-    console.log(this.endX);
-    console.log(this.endY);
+    setTarget: function(target) {
+        this.target = target;
+    },
 
-    this.x_offset = this.x / (this.duration / this.canvas.frameDuration)
-    this.y_offset = this.y / (this.duration / this.canvas.frameDuration)
+    start: function() {
+        this.x_offset = this.x / (this.duration / this.canvas.frameDuration)
+        this.y_offset = this.y / (this.duration / this.canvas.frameDuration)
 
-    action = this; 
+        action = this; 
 
-    this.target.addFrameListener(function(t, dt) {
-        if (t <= action.duration) {
-            action.step(action.x_offset, action.y_offset)
-        }
-    });
-};
+        this.target.addFrameListener(function(t, dt) {
+            if (t <= action.duration) {
+                action.step(action.x_offset, action.y_offset)
+            }
+        });
+    },
 
-MoveBy.prototype.done = function() { // useless?
-    return this._elapsed >= this.duration;
-};
+    done: function() { // useless?
+        return this._elapsed >= this.duration;
+    },
 
-MoveBy.prototype.step = function(x_offset, y_offset) {
-    this.target.x = this.target.x + x_offset;
-    this.target.y = this.target.y + y_offset;
-};
+    step: function(x_offset, y_offset) {
+        this.target.x = this.target.x + x_offset;
+        this.target.y = this.target.y + y_offset;
+    },
 
-MoveBy.prototype.stop = function() {
-    this.target = null;
-};
+    stop: function() {
+        this.target = null;
+    },
+});
 
 
 CircleSprite = Klass(Circle, {
