@@ -6,15 +6,12 @@ MoveByAction = Klass({
         //Definir se o frameDuration vai ser constante (=30) ou se é melhor
         //ficar passando o canvas pra todas as actions.
 
+        this.canvas = canvas;
         this.x = x;
         this.y = y;
         this.target = null;
-        this.duration = duration * 1000; //duration in ms
-        this._elapsed = 0.0;
-        this._done = false;
-        this.scheduled_to_remove = false;
-        this.canvas = canvas;
-
+        // this.duration is in miliseconds
+        this.duration = duration * 1000;
     },
 
     setTarget: function(target) {
@@ -22,25 +19,19 @@ MoveByAction = Klass({
     },
 
     start: function() {
-        this.x_offset = this.x / (this.duration / this.canvas.frameDuration)
-        this.y_offset = this.y / (this.duration / this.canvas.frameDuration)
-
-        action = this; 
-
+        action = this;
+        x_offset = this.x / this.canvas.frameDuration;
+        y_offset = this.y / this.canvas.frameDuration;
         this.target.addFrameListener(function(t, dt) {
             if (t <= action.duration) {
-                action.step(action.x_offset, action.y_offset)
+                action.step(x_offset, y_offset)
             }
         });
     },
 
-    done: function() { // useless?
-        return this._elapsed >= this.duration;
-    },
-
     step: function(x_offset, y_offset) {
-        this.target.x = this.target.x + x_offset;
-        this.target.y = this.target.y + y_offset;
+        this.target.x += x_offset;
+        this.target.y += y_offset;
     },
 
     stop: function() {
@@ -51,17 +42,12 @@ MoveByAction = Klass({
 
 CircleSprite = Klass(Circle, {
 
-    initialize : function(radius, config) {
+    initialize: function(radius, config) {
         Circle.initialize.call(this, radius, config);
-        this.actions = [];
     },
     
-    doo : function(action) {
+    doo: function(action) {
         action.setTarget(this);
-        
         action.start();
-        
-        this.actions.push( action );
-        
     }  
 });
