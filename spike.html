@@ -9,14 +9,17 @@ window.onload = function() {
     
 director.init();
 
-var HelloWorld = new Layer({
+var HelloWorld = new Class({
+	Extends: Layer,
+	initialize: function() {
+        label = new Label('Hello World');
+        label.position(10, 20);
+        this.add( label );	    
+	}
 });
 
-label = new Label('Hello World');
-label.position(10, 20);
-HelloWorld.add( label );
 
-director.run( new Scene( HelloWorld ) );
+director.run( new Scene( new HelloWorld() ) );
 }
 </script>
 </head>
