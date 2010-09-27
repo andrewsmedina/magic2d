@@ -1,6 +1,5 @@
 var Layer = new Class({
-	initialize: function(options) {
-		this.options = options;
+	initialize: function() {
 	},
 	add: function(element) {
 		element.draw();
@@ -34,6 +33,20 @@ var Label = new Class({
         director.context.font = '30px sans-serif';
         director.context.textBaseline = 'top';
         director.context.fillText(this.text, this.x, this.y);        
+    }
+});
+
+var Sprite = new Class({
+    initialize: function(image) {
+        this.image = new Image();
+        this.image.src = image;
+    },
+    position: function(x, y) {
+        this.x = x;
+        this.y = y;
+    },
+    draw: function() {
+        director.context.drawImage(this.image, this.x, this.y);
     }
 });
 

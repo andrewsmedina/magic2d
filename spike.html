@@ -7,19 +7,23 @@
 <script language="javascript">
 window.onload = function() {
     
-director.init();
+    director.init();
 
-var HelloWorld = new Class({
-	Extends: Layer,
-	initialize: function() {
-        label = new Label('Hello World');
-        label.position(10, 20);
-        this.add( label );	    
-	}
-});
+    var HelloWorld = new Class({
+    	Extends: Layer,
+    	initialize: function() {
+            var label = new Label( 'Hello World' );
+            label.position( 10, 20 );
+            this.add( label );	    
+        
+            var grossini = new Sprite( 'grossini.png' );
+            grossini.position( 10, 10 );
+            this.add( grossini );
+    	}
+    });
 
 
-director.run( new Scene( new HelloWorld() ) );
+    director.run( new Scene( new HelloWorld() ) );
 }
 </script>
 </head>
