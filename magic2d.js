@@ -1,53 +1,51 @@
-MoveByAction = Klass({
+var MoveBy = function(x, y, duration) {
+    this.x = x;
+    this.y = y;
+    this.target  = null
+    this.duration = duration * 1000; //converto do miliseconds
+};
 
-    initialize: function(canvas, x, y, duration) {
-        //FIXME o canvas está sendo passado apenas pra pegar o frameDuration.
-        //eh em cima dele que é feita toda a matemática da duração e do offset
-        //Definir se o frameDuration vai ser constante (=30) ou se é melhor
-        //ficar passando o canvas pra todas as actions.
+MoveBy.prototype.setTarget = function(target) {
+    this.target = target;
+};
 
-        this.canvas = canvas;
-        this.x = x;
-        this.y = y;
-        this.target = null;
-        // this.duration is in miliseconds
-        this.duration = duration * 1000;
-    },
+MoveBy.prototype.start = function() {
+    action = this;
+    x_offset = this.x / this.canvas.frameDuration;
+    y_offset = this.y / this.canvas.frameDuration;
+    this.target.addFrameListener(function(t, dt) {
+        if (t <= action.duration) {
+            action.step(x_offset, y_offset)
+        }
+    });    
+};
 
-    setTarget: function(target) {
-        this.target = target;
-    },
+MoveBy.prototype.step = function(x_offset, y_offset) {
+    this.target.x += x_offset;
+    this.target.y += y_offset;
+};
 
-    start: function() {
-        action = this;
-        x_offset = this.x / this.canvas.frameDuration;
-        y_offset = this.y / this.canvas.frameDuration;
-        this.target.addFrameListener(function(t, dt) {
-            if (t <= action.duration) {
-                action.step(x_offset, y_offset)
-            }
-        });
-    },
-
-    step: function(x_offset, y_offset) {
-        this.target.x += x_offset;
-        this.target.y += y_offset;
-    },
-
-    stop: function() {
-        this.target = null;
-    },
-});
-
-
-CircleSprite = Klass(Circle, {
-
-    initialize: function(radius, config) {
-        Circle.initialize.call(this, radius, config);
-    },
+var Sprite = function(radius, config) {
     
-    doo: function(action) {
-        action.setTarget(this);
-        action.start();
-    }  
-});
+};
+
+Sprite.prototype.doo = function(action) {
+    action.setTarget(this);
+    action.start();
+};
+
+var director = {
+    init: function(width, height) {
+        this.width = width;
+        this.height = height;
+
+        var canvas = Raphael(10, 50, 320, 200);
+        var circle = canvas.circle(50, 40, 10);
+        circle.attr("fill", "#f00");
+        circle.attr("stroke", "#fff");
+        
+    }
+    
+};
+var Scene = function(width, height) {
+};

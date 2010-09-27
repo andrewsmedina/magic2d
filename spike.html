@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript" src="mootools-1.2.5.js"></script>
+<script type="text/javascript" src="raphael.js"></script>
+<script type="text/javascript" src="magic.js"></script>
+<script language="javascript">
+window.onload = function() {
+    
+director.init();
+
+var HelloWorld = new Layer({
+});
+
+label = new Label('Hello World');
+label.position(10, 20);
+HelloWorld.add( label );
+
+director.run( new Scene( HelloWorld ) );
+}
+</script>
+</head>
+<body>
+    <canvas id="magic" width="200" height="200">
+        <p>Your browser doesn't support canvas.</p>
+    </canvas>
+</body>
+</html>

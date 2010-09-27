@@ -2,14 +2,16 @@
 <html>
 <head>
 <script type="text/javascript" src="cake.js"></script>
+<script type="text/javascript" src="raphael.js"></script>
 <script type="text/javascript" src="magic2d.js"></script>
 <script language="javascript">
 window.onload = function() {
     
-    var cena = new Canvas( document.body, 600, 400, {fill: 'cyan'} ); 
-    var bola = new CircleSprite( 30, {id: 'bola', x: 80,  y: 80, fill: 'red'} );
-    bola.doo( new MoveByAction( canvas=cena, x=20, y=15, duration=2 ) );
-    cena.append( bola );
+    director.init();
+    //var cena = new Scene(width=600, height=600);
+    //var bola = new Sprite( 30, {x: 80,  y: 80, fill: 'red'} );
+    //bola.doo( new MoveBy(x=20, y=15, duration=2) );
+    //cena.append( bola );
     
 };
 </script>

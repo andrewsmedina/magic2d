@@ -1,0 +1,96 @@
+/*
+    def start( self ):
+        self.start_scale = self.target.scale
+        self.delta = self.end_scale-self.start_scale
+
+    def update(self, t):
+        self.target.scale = self.start_scale + self.delta * t
+*/
+
+ScaleByAction = Klass({
+    
+    initialize: function(canvas, scale, duration) {
+        this.canvas = canvas;
+        this.scale = scale;
+        // this.duration is in miliseconds
+        this.duration = duration * 1000;
+
+    },
+    
+    setTarget: function(target) {
+        this.target = target;
+    },
+    
+    start: function() {
+        var self = this;
+        this.start_scale = self.target.scale;
+        this.delta = (this.scale - this.start_scale) / duration;
+        console.log(this.canvas.frameDuration)
+        
+        this.target.addFrameListener(function(t, dt) {
+            if (t <= self.duration) {
+                //console.log(self.target.scale)
+                self.step(dt);
+            }
+        });
+    },
+
+    step: function(t) {
+        this.target.scale = this.start_scale + this.delta;
+        //console.log(this.target.scale)
+    }
+        
+});
+MoveByAction = Klass({
+
+    initialize: function(canvas, x, y, duration) {
+        //FIXME o canvas está sendo passado apenas pra pegar o frameDuration.
+        //eh em cima dele que é feita toda a matemática da duração e do offset
+        //Definir se o frameDuration vai ser constante (=30) ou se é melhor
+        //ficar passando o canvas pra todas as actions.
+
+        this.canvas = canvas;
+        this.x = x;
+        this.y = y;
+        this.target = null;
+        // this.duration is in miliseconds
+        this.duration = duration * 1000;
+    },
+
+    setTarget: function(target) {
+        this.target = target;
+    },
+
+    start: function() {
+        action = this;
+        x_offset = this.x / this.canvas.frameDuration;
+        y_offset = this.y / this.canvas.frameDuration;
+        this.target.addFrameListener(function(t, dt) {
+            if (t <= action.duration) {
+                action.step(x_offset, y_offset)
+            }
+        });
+    },
+
+    step: function(x_offset, y_offset) {
+        this.target.x += x_offset;
+        this.target.y += y_offset;
+    },
+
+    stop: function() {
+        this.target = null;
+    },
+});
+
+
+CircleSprite = Klass(Circle, {
+
+    initialize: function(radius, config) {
+        Circle.initialize.call(this, radius, config);
+    },
+    
+    doo: function(action) {
+        action.setTarget(this);
+        action.start();
+    }  
+});
