@@ -19,6 +19,8 @@ window.onload = function() {
             var grossini = new Sprite( 'grossini.png' );
             grossini.position( 10, 10 );
             this.add( grossini );
+            
+            grossini.do( new ScaleBy( 3, duration=2 ) );
     	}
     });
 
