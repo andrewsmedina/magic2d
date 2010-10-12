@@ -56,7 +56,7 @@ var Sprite = new Class({
         this._count++;
         return this._count;
     },
-    do: function( action ) {
+    doo: function( action ) {
        action.setTarget( this );
       
        action.start();
@@ -75,9 +75,9 @@ var Sprite = new Class({
     },
     _step: function(dt) {
         
-        for each (action in this.toRemove) {
+        for (action in this.toRemove) {
             if (action in this.actions) {
-                this.actions.remove( action );
+                this.actions.erase( action );
             }
         }
         this.toRemove = [];
