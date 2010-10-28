@@ -32,7 +32,7 @@ var Label = new Class({
         director.context.fillStyle = '#000';
         director.context.font = '30px sans-serif';
         director.context.textBaseline = 'top';
-        director.context.fillText(this.text, this.x, this.y);        
+        director.context.fillText(this.text, this.x, this.y);
     }
 });
 
