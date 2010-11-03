@@ -1,38 +1,27 @@
-var Layer = new Class({
-	initialize: function() {
-	},
-	add: function(element) {
-		element.draw();
-	},
-	draw: function() {
-	    
-	}
-});
+(function(global){
+	
+var magic = global.magic || {};
 
-var Scene = new Class({
-    initialize: function(layer) {
-        this.layer = layer;
+/*
+magic.Action = new Class({
+    initialize: function() {
+        this.duration = null;
+        this.target = null;
+        this.elapsed = 0;
+        this._done = false;
+        this.scheduledToRemove = false;
     },
-    draw: function() {
+    start: function() {
         
-    }
-});
-
-var Label = new Class({
-    initialize: function(text) {
-        this.text = text;
-        this.x = 0;
-        this.y = 0;
     },
-    position: function(x, y) {
-        this.x = x;
-        this.y = y;
+    stop: function() {
+        this.target = null;
     },
-    draw: function() {
-        director.context.fillStyle = '#000';
-        director.context.font = '30px sans-serif';
-        director.context.textBaseline = 'top';
-        director.context.fillText(this.text, this.x, this.y);
+    step: function(dt) {
+        this.elapsed += dt;
+    },
+    done: function() {
+        return this._done;
     }
 });
 
@@ -108,41 +97,6 @@ var Sprite = new Class({
         }
     }
 });
-/*
-/*def _step(self, dt):
-
-    if len( self.actions ) == 0:
-        self.scheduled = False
-        pyglet.clock.unschedule( self._step )
-
-    for action in self.actions:
-        if not action.scheduled_to_remove:
-            action.step(dt)
-            if action.done():
-                self.remove_action( action )
-*/
-
-var Action = new Class({
-    initialize: function() {
-        this.duration = null;
-        this.target = null;
-        this.elapsed = 0;
-        this._done = false;
-        this.scheduledToRemove = false;
-    },
-    start: function() {
-        
-    },
-    stop: function() {
-        this.target = null;
-    },
-    step: function(dt) {
-        this.elapsed += dt;
-    },
-    done: function() {
-        return this._done;
-    }
-});
 
 var IntervalAction = new Class({
     Extends: Action,
@@ -173,16 +127,8 @@ var ScaleBy = new Class({
         this.target.scale = this.startScale + self.delta * t
     }
 });
+*/
 
-var director = {
-    init: function() {
-        this.canvas = document.getElementById('magic');
-        this.context = this.canvas.getContext('2d');
-    },
-    run: function(scene) {
-        scene.draw();
-        
-    }
-};
+global.magic = magic;
 
-
+})(this);
